@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "COVID19UK-reporting-ADF"
+		},
+		"ls_UKcovid19_dl_accountKey": {
+			"value": ""
+		},
+		"ls_ukcovid19_blob_connectionString": {
+			"value": ""
+		},
+		"ls_UKcovid19_dl_properties_typeProperties_url": {
+			"value": "https://covid19reportingukdl.dfs.core.windows.net"
+		},
+		"ls_http_opendata_ecdc_europa_eu_properties_typeProperties_url": {
+			"value": "@{linkedService().sourceBaseURL}"
+		}
+	}
+}
