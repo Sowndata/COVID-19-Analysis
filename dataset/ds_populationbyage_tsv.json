@@ -1,0 +1,25 @@
+{
+	"name": "ds_populationbyage_tsv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_UKcovid19_dl",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Populationbyage.tsv",
+				"folderPath": "population",
+				"fileSystem": "raw"
+			},
+			"columnDelimiter": "\t",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

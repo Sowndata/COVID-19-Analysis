@@ -1,0 +1,9 @@
+{
+	"name": "COVID19UK-reporting-ADF",
+	"location": "canadacentral",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "de1939fe-8bc6-4e3a-9805-5a955c93810d",
+		"tenantId": "f4187f7c-9353-4ba4-ae0e-83ea7ba59d19"
+	}
+}
