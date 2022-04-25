@@ -1,10 +1,10 @@
 {
 	"name": "ls_http_opendata_ecdc_europa_eu",
-	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"parameters": {
 			"sourceBaseURL": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "https://github.com"
 			}
 		},
 		"annotations": [],
@@ -14,5 +14,6 @@
 			"enableServerCertificateValidation": true,
 			"authenticationType": "Anonymous"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
 }
