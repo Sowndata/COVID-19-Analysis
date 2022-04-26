@@ -13,24 +13,21 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [
-					{
-						"name": "sourceBaseURL"
-					}
-				],
+				"userProperties": [],
 				"typeProperties": {
 					"source": {
 						"type": "JsonSource",
 						"storeSettings": {
-							"type": "HttpReadSettings",
-							"requestMethod": "GET"
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
 							"type": "JsonReadSettings"
 						}
 					},
 					"dataset": {
-						"referenceName": "ds_ecdc_url_fileset",
+						"referenceName": "ds_ecdc_data_filelist",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
@@ -68,13 +65,13 @@
 							"userProperties": [],
 							"typeProperties": {
 								"source": {
-									"type": "JsonSource",
+									"type": "DelimitedTextSource",
 									"storeSettings": {
 										"type": "HttpReadSettings",
 										"requestMethod": "GET"
 									},
 									"formatSettings": {
-										"type": "JsonReadSettings"
+										"type": "DelimitedTextReadSettings"
 									}
 								},
 								"sink": {
@@ -92,8 +89,18 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "ds_ecdc_url_fileset",
-									"type": "DatasetReference"
+									"referenceName": "ds_ecdc_data_http",
+									"type": "DatasetReference",
+									"parameters": {
+										"relativeURL": {
+											"value": "@item().sourceRelativeURL",
+											"type": "Expression"
+										},
+										"baseURL": {
+											"value": "@item().sourceBaseURL",
+											"type": "Expression"
+										}
+									}
 								}
 							],
 							"outputs": [

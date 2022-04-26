@@ -5,14 +5,6 @@
 			"referenceName": "ls_ukcovid19_blob",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"relativeURL": {
-				"type": "string"
-			},
-			"baseURL": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "Json",
 		"typeProperties": {
