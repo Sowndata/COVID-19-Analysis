@@ -323,7 +323,10 @@
 					"referenceName": "ls_http_opendata_ecdc_europa_eu",
 					"type": "LinkedServiceReference",
 					"parameters": {
-						"sourceBaseURL": "https://github.com"
+						"sourceBaseURL": {
+							"value": "@dataset().baseURL",
+							"type": "Expression"
+						}
 					}
 				},
 				"parameters": {
@@ -338,7 +341,11 @@
 				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
-						"type": "HttpServerLocation"
+						"type": "HttpServerLocation",
+						"relativeUrl": {
+							"value": "@dataset().relativeURL",
+							"type": "Expression"
+						}
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
@@ -433,8 +440,7 @@
 			"properties": {
 				"parameters": {
 					"sourceBaseURL": {
-						"type": "string",
-						"defaultValue": "https://github.com"
+						"type": "string"
 					}
 				},
 				"annotations": [],
