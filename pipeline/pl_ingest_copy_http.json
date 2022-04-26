@@ -13,7 +13,11 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [],
+				"userProperties": [
+					{
+						"name": "sourceBaseURL"
+					}
+				],
 				"typeProperties": {
 					"source": {
 						"type": "JsonSource",
