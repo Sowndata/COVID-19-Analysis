@@ -130,15 +130,16 @@
 							"source": {
 								"type": "JsonSource",
 								"storeSettings": {
-									"type": "HttpReadSettings",
-									"requestMethod": "GET"
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
 									"type": "JsonReadSettings"
 								}
 							},
 							"dataset": {
-								"referenceName": "ds_ecdc_url_fileset",
+								"referenceName": "ds_ecdc_data_filelist",
 								"type": "DatasetReference",
 								"parameters": {}
 							},
@@ -177,13 +178,13 @@
 									"userProperties": [],
 									"typeProperties": {
 										"source": {
-											"type": "JsonSource",
+											"type": "DelimitedTextSource",
 											"storeSettings": {
 												"type": "HttpReadSettings",
 												"requestMethod": "GET"
 											},
 											"formatSettings": {
-												"type": "JsonReadSettings"
+												"type": "DelimitedTextReadSettings"
 											}
 										},
 										"sink": {
@@ -201,9 +202,18 @@
 									},
 									"inputs": [
 										{
-											"referenceName": "ds_ecdc_url_fileset",
+											"referenceName": "ds_ecdc_data_http",
 											"type": "DatasetReference",
-											"parameters": {}
+											"parameters": {
+												"relativeURL": {
+													"value": "@item().sourceRelativeURL",
+													"type": "Expression"
+												},
+												"baseURL": {
+													"value": "@item().sourceBaseURL",
+													"type": "Expression"
+												}
+											}
 										}
 									],
 									"outputs": [
@@ -231,7 +241,8 @@
 				"lastPublishTime": "2022-04-25T21:36:22Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_ecdc_url_fileset')]",
+				"[concat(variables('factoryId'), '/datasets/ds_ecdc_data_filelist')]",
+				"[concat(variables('factoryId'), '/datasets/ds_ecdc_data_http')]",
 				"[concat(variables('factoryId'), '/datasets/ds_ecdc_data_csv_dl')]"
 			]
 		},
@@ -267,22 +278,21 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_ecdc_url_fileset')]",
+			"name": "[concat(parameters('factoryName'), '/ds_ecdc_data_filelist')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "ls_http_opendata_ecdc_europa_eu",
-					"type": "LinkedServiceReference",
-					"parameters": {
-						"sourceBaseURL": "https://github.com"
-					}
+					"referenceName": "ls_ukcovid19_blob",
+					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
 				"type": "Json",
 				"typeProperties": {
 					"location": {
-						"type": "HttpServerLocation"
+						"type": "AzureBlobStorageLocation",
+						"fileName": "ecdc_file_list.json",
+						"container": "configs"
 					}
 				},
 				"schema": {
@@ -299,6 +309,42 @@
 						}
 					}
 				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_ukcovid19_blob')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_ecdc_data_http')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_http_opendata_ecdc_europa_eu",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"sourceBaseURL": "https://github.com"
+					}
+				},
+				"parameters": {
+					"relativeURL": {
+						"type": "string"
+					},
+					"baseURL": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "HttpServerLocation"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": []
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ls_http_opendata_ecdc_europa_eu')]"
